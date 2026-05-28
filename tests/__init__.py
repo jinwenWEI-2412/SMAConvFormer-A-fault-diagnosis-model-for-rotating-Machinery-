@@ -1,3 +1,1 @@
-"""Tests module - Contains unit tests and test utilities"""
-
-__all__ = []
+"""Tests package for fault diagnosis models"""

@@ -1,13 +1,27 @@
-#!/usr/bin/python
-# -*- coding:utf-8 -*-
+"""Models package for fault diagnosis"""
 
-from models.ResNet18 import ResNet18
-from models.MobileNet import MobileNet
-from models.MobileNetV2 import MobileNetV2
-from models.MCSwinT import mcswint
-from models.Convformer_NSE import convoformer_v1_small
-from models.CLFormer import CLFormer
-from models.MK_ResCNN import MSResNet
-from models.SMAConvformer import SMAConvformer
-from models.Liconvformer import Liconvformer
-from models.EWSNet import EWSNet
+from .SMAConvformer import SMAConvformer
+from .CLFormer import CLFormer
+from .Convformer_NSE import ConvformerNSE
+from .EWSNet import EWSNet
+from .Liconvformer import LiConvFormer
+from .MCSwinT import MCSwinT
+from .MK_ResCNN import MK_ResCNN
+from .MobileNet import MobileNet
+from .MobileNetV2 import MobileNetV2
+from .ResNet18 import ResNet18
+from .SCSA import SCSA
+
+__all__ = [
+    'SMAConvformer',
+    'CLFormer',
+    'ConvformerNSE',
+    'EWSNet',
+    'LiConvFormer',
+    'MCSwinT',
+    'MK_ResCNN',
+    'MobileNet',
+    'MobileNetV2',
+    'ResNet18',
+    'SCSA',
+]

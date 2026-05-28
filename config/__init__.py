@@ -1,7 +1,8 @@
-"""Config module - Contains configuration and arguments"""
+"""Config package for argument parsing"""
 
-from .args_diagnosis import get_args
+from .args_config import parse_args, get_args
 
 __all__ = [
+    'parse_args',
     'get_args',
 ]

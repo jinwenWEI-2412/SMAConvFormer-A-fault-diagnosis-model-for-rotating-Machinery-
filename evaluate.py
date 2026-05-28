@@ -3,6 +3,7 @@
 import torch
 from config import get_args
 from models import SMAConvformer
+from utils.train_val_test import train_val_test
 
 
 def evaluate():
@@ -19,7 +20,14 @@ def evaluate():
     model.eval()
     
     print('Evaluation started...')
-    # Add evaluation loop here
+    
+    # Run evaluation using train_val_test framework
+    operation = train_val_test(args)
+    operation.setup(0)
+    acc, j = operation.test(0)
+    
+    print(f'Evaluation completed!')
+    print(f'Accuracy: {acc:.4f}, J-score: {j:.4f}')
     
 
 if __name__ == '__main__':

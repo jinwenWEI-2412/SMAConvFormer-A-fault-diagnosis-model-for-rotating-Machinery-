@@ -1,3 +1,7 @@
-"""Utils module - Contains utility functions and helpers"""
+"""Utils package for fault diagnosis"""
 
-__all__ = []
+from .data_pre import preprocess_data
+
+__all__ = [
+    'preprocess_data',
+]
