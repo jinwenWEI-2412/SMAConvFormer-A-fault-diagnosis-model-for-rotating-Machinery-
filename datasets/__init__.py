@@ -1,15 +1,7 @@
-"""Datasets module - Contains dataset loading and preprocessing"""
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
 
-from .BJTU_rao import load_bjtu_rao
-from .OU_bearing import load_ou_bearing
-from .XJTU_gearbox import load_xjtu_gearbox
-from .XJTU_spurgear import load_xjtu_spurgear
-from .data_pre import preprocess_data
-
-__all__ = [
-    'load_bjtu_rao',
-    'load_ou_bearing',
-    'load_xjtu_gearbox',
-    'load_xjtu_spurgear',
-    'preprocess_data',
-]
+from datasets.BJTU_rao import BJTU_rao
+from datasets.XJTU_gearbox import XJTU_gearbox
+from datasets.XJTU_spurgear import XJTU_spurgear
+from datasets.OU_bearing import OU_bearing
