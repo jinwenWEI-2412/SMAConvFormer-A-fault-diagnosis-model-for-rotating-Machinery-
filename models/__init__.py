@@ -1,19 +1,13 @@
-"""Models module - Contains fault diagnosis model architectures"""
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
 
-from .SMAConvformer import SMAConvformer
-from .Convformer_NSE import Convformer_NSE
-from .CLFormer import CLFormer
-from .EWSNet import EWSNet
-from .Liconvformer import Liconvformer
-from .MCSwinT import MCSwinT
-from .SCSA import SCSA
-
-__all__ = [
-    'SMAConvformer',
-    'Convformer_NSE',
-    'CLFormer',
-    'EWSNet',
-    'Liconvformer',
-    'MCSwinT',
-    'SCSA',
-]
+from models.ResNet18 import ResNet18
+from models.MobileNet import MobileNet
+from models.MobileNetV2 import MobileNetV2
+from models.MCSwinT import mcswint
+from models.Convformer_NSE import convoformer_v1_small
+from models.CLFormer import CLFormer
+from models.MK_ResCNN import MSResNet
+from models.SMAConvformer import SMAConvformer
+from models.Liconvformer import Liconvformer
+from models.EWSNet import EWSNet
