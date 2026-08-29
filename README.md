@@ -1,55 +1,84 @@
 # SMAConvFormer: A fault diagnosis model for rotating machinery with high noise and variable operating conditions
-* Core codes for the paper:
-<br> SMAConvFormer: a fault diagnosis model for rotating machinery with high noise and variable operating conditions
-* Journal: Measurement Science and Technology
 
-## Reference
-This project is based on the framework from [LiConvFormer](https://github.com/yanshen0210/LiConvFormer-a-lightweight-fault-diagnosis-framework)
+SMAConvFormer — a lightweight PyTorch framework for fault diagnosis of rotating machinery. It provides data preprocessing, multiple model implementations (including the proposed SMAConvformer), and training/evaluation pipelines so researchers can reproduce experiments or run comparisons on similar datasets.
 
+## Quick summary
+- Paper: "SMAConvFormer: a fault diagnosis model for rotating machinery with high noise and variable operating conditions" (Measurement Science and Technology)
+- Python: 3.8 recommended
+- Framework: PyTorch (see requirements)
 
-## Our operating environment
-* Python 3.8
-* pytorch  1.10.1
-* numpy  1.22.0 (If you get an error when saving data, try lowering your numpy version!)
-* and other necessary libs
+## Quick start (minimum steps)
+1. Create virtual environment and install dependencies
+```bash
+python3.8 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-## Datasets
-* [Case1: XJTU gearbox](https://drive.google.com/drive/folders/1ejGZu9oeL1D9nKN07Q7z72O8eFrWQTay?usp=sharing)
-* [Case2: XJTU spurgear](https://drive.google.com/drive/folders/1ejGZu9oeL1D9nKN07Q7z72O8eFrWQTay?usp=sharing)
-* [Case3: OU bearing](https://drive.google.com/file/d/1PQnIBKzAu098SAl3DUw0n8AHONynpdb7/view?usp=sharing)
-* [Case4: BJTU-Rao](https://drive.google.com/drive/folders/1RlZvFw-v07VvsL2Ni9cS7iFrTPDIhn2r?usp=sharing)
-* [Save dataset](https://drive.google.com/file/d/10XQDVN9YqbM7--X3dB55Io1eRLsLmruI/view?usp=sharing)  
-  
-  
-## Guide 
-* This repository provides a lightweight fault diagnosis framework. 
-* It includes the pre-processing for the data and the model proposed in the paper. 
-* `train_val_test.py` is the train&val&test process of all methods.
-* You need to load the data in above Datasets link at first, and put them in the `data` folder. Then run in `args_diagnosis.py`
-<br> Pay attention to that if you want to run the data pre-process, you need to load [Case1](https://drive.google.com/drive/folders/1ejGZu9oeL1D9nKN07Q7z72O8eFrWQTay?usp=sharing),
-[Case2](https://drive.google.com/drive/folders/1ejGZu9oeL1D9nKN07Q7z72O8eFrWQTay?usp=sharing) and [Case3](https://drive.google.com/file/d/1PQnIBKzAu098SAl3DUw0n8AHONynpdb7/view?usp=sharing) in Datasets,
-<br> and set --save_dataset (in `args_diagnosis.py`) to True; or you can just load the [Save dataset](https://drive.google.com/file/d/10XQDVN9YqbM7--X3dB55Io1eRLsLmruI/view?usp=sharing), and set --save_dataset to False.
-* You can also choose the modules or adjust the parameters of the model to suit your needs.
+2. Prepare dataset
+- Download one of the datasets listed below and place the extracted files under `./data/<dataset_name>/` as described in each dataset script, or download the provided "save dataset" (a preprocessed .pkl) and put it in `./data/save_dataset/`.
 
-## Initial learning rate
-* Liconvformer: Case1--0.01;  Case2--0.001;  Case3--0.01；Case4--0.01
-* SMAConvformer: Case1--0.01;  Case2--0.001;  Case3--0.01;  Case4--0.01
-* EWSNet: Case1--0.01;  Case2--0.001;  Case3--0.01;  Case4--0.01
-* CLFormer: Case1--0.01;  Case2--0.001;  Case3--0.01;  Case4--0.01
-* convoformer_v1_small: Case1--0.001;  Case2--0.001;  Case3--0.001
-* mcswint: Case1--0.001;  Case2--0.001;  Case3--0.01;  Case4--0.01
-* MobileNet: Case1--0.01;  Case2--0.001;  Case3--0.001;  Case4--0.01
-* MobileNetV2: Case1--0.01;  Case2--0.001;  Case3--0.001;  Case4--0.01
-* ResNet18: Case1--0.001;  Case2--0.001;  Case3--0.001;  Case4--0.01
-* MSResNet: Case1--0.001;  Case2--0.001;  Case3--0.001;  Case4--0.01
-## Pakages
-* `data` needs loading the Datasets in above links
-* `datasets` contians the pre-processing process for the data
-* `models` contians 8 methods including the proposed method
-* `utils` contians train&val&test processes
+3. Configure run
+- By default the project reads CLI args via `config/args_config.py` and `args_diagnosis.py`.
+- Example: to train SMAConvformer on BJTU_rao with defaults, edit `config/args_config.py` or run from command line (see examples below).
+
+4. Run training
+```bash
+# default entrypoint
+python train.py
+
+# example with explicit args (override defaults)
+python -m train --model_name SMAConvformer --dataset_name BJTU_rao --batch_size 32 --lr 0.01 --epoch 100
+```
+
+Notes:
+- If you want to first create the preprocessed dataset using the raw data, set `--save_dataset True` and ensure dataset scripts can find the raw files. Example:
+```bash
+python -m train --save_dataset True --dataset_name BJTU_rao
+```
+This will create `./data/save_dataset/<dataset_name>.pkl` used by the data loaders.
+
+## Datasets (links in original README)
+- Case1: XJTU gearbox
+- Case2: XJTU spurgear
+- Case3: OU bearing
+- Case4: BJTU-Rao
+- Save dataset (preprocessed .pkl)
+
+See `datasets/` for per-dataset loader and preprocessing details.
+
+## How to run common scenarios
+- Train (default args in config/args_config.py)
+  ```bash
+  python train.py
+  ```
+- Train with specific model and lr
+  ```bash
+  python -m train --model_name SMAConvformer --dataset_name BJTU_rao --lr 0.01 --epoch 120
+  ```
+- Create preprocessed dataset from raw files
+  ```bash
+  python -m train --save_dataset True --dataset_name XJTU_gearbox
+  ```
+- Test only (load checkpoint saved under `results/<dataset_name>/`)
+  ```bash
+  python -m train --only_test True --dataset_name BJTU_rao
+  ```
+
+## Repo layout (high level)
+- models/      model implementations (SMAConvformer, LiConvFormer, EWSNet, baselines)
+- datasets/    dataset loaders & preprocessing for XJTU, OU, BJTU
+- config/      CLI arg definitions and helpers
+- utils/       training/validation/test loop, logging, and helpers
+- train.py     training entrypoint
+
+## Tips
+- Python 3.8 and PyTorch >= 1.9.0 are recommended. README originally used torch 1.10.1.
+- If you encounter errors when saving data, try lowering numpy version (README suggests using numpy 1.22.0 may cause issues; try 1.21.x or 1.20.x).
+- Logs, checkpoints and predictions are saved under `./results/<dataset_name>/`.
 
 ## Citation
-If our work is useful to you, please cite the following paper, it is the greatest encouragement to our open source work, thank you very much!
+If this repository helps your research, please cite:
 ```
 @paper{
   title = {SMAConvFormer: a fault diagnosis model for rotating machinery with high noise and variable operating conditions},
